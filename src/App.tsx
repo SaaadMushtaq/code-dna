@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Dna, Microscope, Flame } from "lucide-react";
 import CodeInput from "./components/CodeInput";
 import DnaBackground from "./components/DnaBackground";
 import DnaCard from "./components/DnaCard";
@@ -60,8 +61,9 @@ export default function App() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center"
         >
-          <h1 className="text-5xl font-bold tracking-tight gradient-text">
-            🧬 Code DNA
+          <h1 className="text-5xl font-bold tracking-tight gradient-text flex items-center justify-center gap-3">
+            <Dna size={44} strokeWidth={1.5} />
+            Code DNA
           </h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -81,7 +83,7 @@ export default function App() {
             onClick={() => setCriteriaOpen(true)}
             className="cursor-pointer mt-4 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-zinc-700 bg-zinc-900/70 text-zinc-400 text-xs hover:border-purple-500/50 hover:text-purple-300 transition-colors"
           >
-            <span>🔬</span> See Criteria
+            <Microscope size={12} /> See Criteria
           </motion.button>
         </motion.div>
 
@@ -101,7 +103,9 @@ export default function App() {
                   : "text-zinc-400 hover:text-zinc-200"
               }`}
             >
-              🧬 DNA Mode
+              <span className="inline-flex items-center gap-1.5">
+                <Dna size={14} strokeWidth={2} /> DNA Mode
+              </span>
             </button>
             <button
               onClick={() => handleModeSwitch("roast")}
@@ -111,7 +115,9 @@ export default function App() {
                   : "text-zinc-400 hover:text-zinc-200"
               }`}
             >
-              🔥 Roast Mode
+              <span className="inline-flex items-center gap-1.5">
+                <Flame size={14} strokeWidth={2} /> Roast Mode
+              </span>
             </button>
           </div>
         </motion.div>

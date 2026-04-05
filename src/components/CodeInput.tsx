@@ -7,6 +7,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
 import { java } from "@codemirror/lang-java";
 import { tags as t } from "@lezer/highlight";
+import { Dna, Flame } from "lucide-react";
 
 const dnaTheme = createTheme({
   theme: "dark",
@@ -95,7 +96,17 @@ export default function CodeInput({ onAnalyze, mode }: CodeInputProps) {
         whileTap={{ scale: 0.96 }}
         className="btn-shimmer cursor-pointer mx-auto px-8 py-3 rounded-full bg-linear-to-r from-purple-500 to-blue-500 text-white font-semibold text-sm hover:brightness-110 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
       >
-        {mode === "roast" ? "🔥 Roast My Code" : "🧬 Analyze My DNA"}
+        {mode === "roast" ? (
+          <div className="flex items-center gap-2">
+            <Flame size={14} strokeWidth={2} />
+            <p>Roast My Code</p>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Dna size={14} strokeWidth={2} />
+            <p>Analyze My DNA</p>
+          </div>
+        )}
       </motion.button>
     </div>
   );

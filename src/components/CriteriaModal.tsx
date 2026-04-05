@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
 
 interface CriteriaModalProps {
   open: boolean;
@@ -7,9 +8,8 @@ interface CriteriaModalProps {
 
 const CRITERIA = [
   {
-    emoji: "🟢",
-    label: "Over-Explainer",
     color: "#22c55e",
+    label: "Over-Explainer",
     border: "border-green-500/30",
     bg: "bg-green-500/8",
     hints: [
@@ -19,9 +19,8 @@ const CRITERIA = [
     ],
   },
   {
-    emoji: "🔵",
-    label: "Minimalist",
     color: "#3b82f6",
+    label: "Minimalist",
     border: "border-blue-500/30",
     bg: "bg-blue-500/8",
     hints: [
@@ -31,9 +30,8 @@ const CRITERIA = [
     ],
   },
   {
-    emoji: "🟣",
-    label: "Functional Thinker",
     color: "#a855f7",
+    label: "Functional Thinker",
     border: "border-purple-500/30",
     bg: "bg-purple-500/8",
     hints: [
@@ -43,9 +41,8 @@ const CRITERIA = [
     ],
   },
   {
-    emoji: "⚪",
-    label: "OOP Lover",
     color: "#94a3b8",
+    label: "OOP Lover",
     border: "border-slate-400/30",
     bg: "bg-slate-500/8",
     hints: [
@@ -55,9 +52,8 @@ const CRITERIA = [
     ],
   },
   {
-    emoji: "🔴",
-    label: "Chaotic Coder",
     color: "#ef4444",
+    label: "Chaotic Coder",
     border: "border-red-500/30",
     bg: "bg-red-500/8",
     hints: [
@@ -67,9 +63,8 @@ const CRITERIA = [
     ],
   },
   {
-    emoji: "🟡",
-    label: "Perfectionist",
     color: "#eab308",
+    label: "Perfectionist",
     border: "border-yellow-500/30",
     bg: "bg-yellow-500/8",
     hints: [
@@ -126,54 +121,42 @@ export default function CriteriaModal({ open, onClose }: CriteriaModalProps) {
                   onClick={onClose}
                   className="text-zinc-600 hover:text-zinc-300 transition-colors p-1 rounded-lg hover:bg-zinc-800 ml-4 shrink-0 cursor-pointer"
                 >
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  >
-                    <path d="M4 4l10 10M14 4L4 14" />
-                  </svg>
+                  <X size={16} strokeWidth={2} />
                 </button>
               </div>
 
               {/* Criteria list */}
               <div className="flex flex-col gap-3">
-                {CRITERIA.map(
-                  ({ emoji, label, color, border, bg, hints }, i) => (
-                    <motion.div
-                      key={label}
-                      initial={{ opacity: 0, x: -12 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.07, duration: 0.35 }}
-                      className={`rounded-xl border ${border} ${bg} p-4`}
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <span>{emoji}</span>
-                        <span
-                          className="font-semibold text-sm"
-                          style={{ color }}
+                {CRITERIA.map(({ label, color, border, bg, hints }, i) => (
+                  <motion.div
+                    key={label}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.07, duration: 0.35 }}
+                    className={`rounded-xl border ${border} ${bg} p-4`}
+                  >
+                    <div className="flex items-center gap-2.5 mb-2">
+                      <span
+                        className="w-2.5 h-2.5 rounded-full shrink-0"
+                        style={{ backgroundColor: color }}
+                      />
+                      <span className="font-semibold text-sm" style={{ color }}>
+                        {label}
+                      </span>
+                    </div>
+                    <ul className="space-y-1">
+                      {hints.map((hint) => (
+                        <li
+                          key={hint}
+                          className="text-xs text-zinc-400 flex gap-2"
                         >
-                          {label}
-                        </span>
-                      </div>
-                      <ul className="space-y-1">
-                        {hints.map((hint) => (
-                          <li
-                            key={hint}
-                            className="text-xs text-zinc-400 flex gap-2"
-                          >
-                            <span className="text-zinc-600 shrink-0">–</span>
-                            {hint}
-                          </li>
-                        ))}
-                      </ul>
-                    </motion.div>
-                  ),
-                )}
+                          <span className="text-zinc-600 shrink-0">–</span>
+                          {hint}
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                ))}
               </div>
 
               <p className="text-zinc-700 text-[11px] text-center mt-5 tracking-wide">

@@ -24,7 +24,6 @@ export default function TraitBadges({ traits }: TraitBadgesProps) {
           className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-semibold cursor-default ${trait.bgColor} ${trait.borderColor}`}
           style={{ color: trait.color }}
         >
-          <span>{trait.emoji}</span>
           <span>{trait.label}</span>
         </motion.div>
       ))}

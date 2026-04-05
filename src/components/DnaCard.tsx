@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import type { RefObject } from "react";
+import { FileText, MessageSquare, Repeat2 } from "lucide-react";
 import {
   motion,
   useMotionValue,
@@ -53,13 +54,21 @@ export default function DnaCard({ result, cardRef }: DnaCardProps) {
   };
 
   const stats = [
-    { icon: "📄", value: `${result.totalLines}`, label: "lines" },
     {
-      icon: "💬",
+      icon: <FileText size={12} className="text-zinc-500" />,
+      value: `${result.totalLines}`,
+      label: "lines",
+    },
+    {
+      icon: <MessageSquare size={12} className="text-zinc-500" />,
       value: `${Math.round(result.commentRatio * 100)}%`,
       label: "comments",
     },
-    { icon: "🔁", value: `${result.functionalOps}`, label: "functional ops" },
+    {
+      icon: <Repeat2 size={12} className="text-zinc-500" />,
+      value: `${result.functionalOps}`,
+      label: "functional ops",
+    },
   ];
 
   return (
@@ -158,8 +167,8 @@ export default function DnaCard({ result, cardRef }: DnaCardProps) {
                     key={label}
                     className="flex items-center gap-1.5 bg-zinc-800/70 px-3 py-1.5 rounded-full text-xs text-zinc-500 border border-zinc-700/50"
                   >
-                    {icon}{" "}
-                    <span className="text-zinc-300 font-semibold">{value}</span>{" "}
+                    {icon}
+                    <span className="text-zinc-300 font-semibold">{value}</span>
                     {label}
                   </span>
                 ))}

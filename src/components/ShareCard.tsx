@@ -1,5 +1,6 @@
 import { toPng } from "html-to-image";
 import type { RefObject } from "react";
+import { Download } from "lucide-react";
 
 interface ShareCardProps {
   cardRef: RefObject<HTMLDivElement | null>;
@@ -18,9 +19,9 @@ export default function ShareCard({ cardRef }: ShareCardProps) {
   return (
     <button
       onClick={handleDownload}
-      className="cursor-pointer mt-5 px-6 py-2.5 rounded-full bg-zinc-800 border border-zinc-700 text-slate-400 text-sm hover:bg-zinc-700 transition-colors"
+      className="cursor-pointer mt-5 inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-zinc-800 border border-zinc-700 text-slate-400 text-sm hover:bg-zinc-700 transition-colors"
     >
-      ⬇️ Download DNA Card
+      <Download size={14} /> Download DNA Card
     </button>
   );
 }
