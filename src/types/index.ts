@@ -15,3 +15,13 @@ export interface AnalysisResult {
   commentRatio: number;
   functionalOps: number;
 }
+
+export interface Roast {
+  id: string;
+  emoji: string;
+  title: string;
+  message: string;
+  severity: "mild" | "medium" | "savage";
+}
+
+export type AppMode = "dna" | "roast";

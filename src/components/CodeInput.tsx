@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import type { AppMode } from "../types";
 import CodeMirror from "@uiw/react-codemirror";
 import { createTheme } from "@uiw/codemirror-themes";
 import { javascript } from "@codemirror/lang-javascript";
@@ -45,9 +46,10 @@ const EXTENSIONS = [
 
 interface CodeInputProps {
   onAnalyze: (code: string) => void;
+  mode: AppMode;
 }
 
-export default function CodeInput({ onAnalyze }: CodeInputProps) {
+export default function CodeInput({ onAnalyze, mode }: CodeInputProps) {
   const [code, setCode] = useState("");
 
   return (
@@ -93,7 +95,7 @@ export default function CodeInput({ onAnalyze }: CodeInputProps) {
         whileTap={{ scale: 0.96 }}
         className="btn-shimmer cursor-pointer mx-auto px-8 py-3 rounded-full bg-linear-to-r from-purple-500 to-blue-500 text-white font-semibold text-sm hover:brightness-110 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
       >
-        🧬 Analyze My DNA
+        {mode === "roast" ? "🔥 Roast My Code" : "🧬 Analyze My DNA"}
       </motion.button>
     </div>
   );

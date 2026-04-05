@@ -4,16 +4,48 @@ import CodeInput from "./components/CodeInput";
 import DnaBackground from "./components/DnaBackground";
 import DnaCard from "./components/DnaCard";
 import CriteriaModal from "./components/CriteriaModal";
-import { analyzeCode } from "./utils/analyzeCode";
-import type { AnalysisResult } from "./types";
+import RoastCard from "./components/RoastCard";
+import LoadingState from "./components/LoadingState";
+import { analyzeDNA, roastCode } from "./utils/aiAnalyze";
+import type { AnalysisResult, AppMode, Roast } from "./types";
 
 export default function App() {
   const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [roastResult, setRoastResult] = useState<Roast[] | null>(null);
+  const [mode, setMode] = useState<AppMode>("dna");
   const [criteriaOpen, setCriteriaOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
 
-  const handleAnalyze = (code: string) => {
-    setResult(analyzeCode(code));
+  const handleAnalyze = async (code: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      if (mode === "dna") {
+        const dnaResult = await analyzeDNA(code);
+        setResult(dnaResult);
+        setRoastResult(null);
+      } else {
+        const roasts = await roastCode(code);
+        setRoastResult(roasts);
+        setResult(null);
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleModeSwitch = (newMode: AppMode) => {
+    setMode(newMode);
+    setResult(null);
+    setRoastResult(null);
   };
 
   return (
@@ -53,6 +85,37 @@ export default function App() {
           </motion.button>
         </motion.div>
 
+        {/* Mode toggle */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.3 }}
+          className="flex justify-center"
+        >
+          <div className="flex gap-1 p-1 rounded-full bg-zinc-900 border border-zinc-800">
+            <button
+              onClick={() => handleModeSwitch("dna")}
+              className={`cursor-pointer px-5 py-1.5 rounded-full text-sm font-semibold transition-all ${
+                mode === "dna"
+                  ? "bg-linear-to-r from-purple-500 to-blue-500 text-white shadow"
+                  : "text-zinc-400 hover:text-zinc-200"
+              }`}
+            >
+              🧬 DNA Mode
+            </button>
+            <button
+              onClick={() => handleModeSwitch("roast")}
+              className={`cursor-pointer px-5 py-1.5 rounded-full text-sm font-semibold transition-all ${
+                mode === "roast"
+                  ? "bg-linear-to-r from-orange-500 to-red-500 text-white shadow"
+                  : "text-zinc-400 hover:text-zinc-200"
+              }`}
+            >
+              🔥 Roast Mode
+            </button>
+          </div>
+        </motion.div>
+
         <CriteriaModal
           open={criteriaOpen}
           onClose={() => setCriteriaOpen(false)}
@@ -64,13 +127,22 @@ export default function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <CodeInput onAnalyze={handleAnalyze} />
+          <div className={isLoading ? "hidden" : ""}>
+            <CodeInput onAnalyze={handleAnalyze} mode={mode} />
+          </div>
+          <AnimatePresence>
+            {isLoading && <LoadingState mode={mode} />}
+          </AnimatePresence>
+          {error && (
+            <p className="mt-3 text-center text-red-400 text-xs">{error}</p>
+          )}
         </motion.div>
 
         {/* Result */}
-        <AnimatePresence>
-          {result && (
+        <AnimatePresence mode="wait">
+          {mode === "dna" && result && (
             <motion.div
+              key="dna-result"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, y: -16 }}
@@ -78,6 +150,18 @@ export default function App() {
               className="w-full"
             >
               <DnaCard result={result} cardRef={cardRef} />
+            </motion.div>
+          )}
+          {mode === "roast" && roastResult && (
+            <motion.div
+              key="roast-result"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.4 }}
+              className="w-full"
+            >
+              <RoastCard roasts={roastResult} />
             </motion.div>
           )}
         </AnimatePresence>
