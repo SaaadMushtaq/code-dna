@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* Animated gradient for the hero title */
+.gradient-text {
+  background: linear-gradient(
+    90deg,
+    #c084fc,
+    #818cf8,
+    #34d399,
+    #06b6d4,
+    #c084fc
+  );
+  background-size: 300% 100%;
+  animation: gradient-flow 6s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 300% 50%;
+  }
+}
+
+/* Button shimmer sweep */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
+  transform: skewX(-15deg);
+  animation: btn-shine 3.5s ease-in-out infinite;
+}
+
+@keyframes btn-shine {
+  0% {
+    left: -150%;
+  }
+  55%,
+  100% {
+    left: 160%;
+  }
+}
+
+textarea {
+  scrollbar-width: thin;
+  scrollbar-color: #7c3aed #18181b;
+}
+
+/* CodeMirror editor scrollbar */
+.cm-scroller {
+  scrollbar-width: thin;
+  scrollbar-color: #7c3aed transparent;
+  overflow: auto !important;
+}
+
+.cm-scroller::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.cm-scroller::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cm-scroller::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #a855f7, #6366f1);
+  border-radius: 9999px;
+}
+
+.cm-scroller::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #c084fc, #818cf8);
+}
+
+/* Remove CodeMirror's default focus outline — we handle it on the wrapper */
+.cm-editor {
+  outline: none !important;
+}
+
+.cm-editor.cm-focused {
+  outline: none !important;
+}
+
+textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: #18181b;
+  border-radius: 0 0.75rem 0.75rem 0;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #7c3aed, #3b82f6);
+  border-radius: 9999px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #9333ea, #60a5fa);
+}
+
+.modal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #7c3aed transparent;
+}
+
+.modal-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.modal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #a855f7, #6366f1);
+  border-radius: 9999px;
+}
+
+.modal-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #c084fc, #818cf8);
+}
